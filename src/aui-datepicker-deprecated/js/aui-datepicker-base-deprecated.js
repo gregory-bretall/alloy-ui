@@ -23,7 +23,7 @@ var Lang = A.Lang,
     TRIGGER = 'trigger',
     TYPE = 'type';
 
-var DatePicker = A.Component.create({
+var DatePickerDeprecated = A.Component.create({
     NAME: DATEPICKER,
 
     ATTRS: {
@@ -140,7 +140,7 @@ var DatePicker = A.Component.create({
         bindUI: function() {
             var instance = this;
 
-            DatePicker.superclass.bindUI.apply(this, arguments);
+            DatePickerDeprecated.superclass.bindUI.apply(this, arguments);
 
             instance.on('show', instance._onShowOverlay);
 
@@ -321,7 +321,7 @@ var DatePicker = A.Component.create({
     }
 });
 
-A.DatePicker = DatePicker;
+A.DatePickerDeprecated = DatePickerDeprecated;
 
 /**
  * A base class for DatepickerManager:

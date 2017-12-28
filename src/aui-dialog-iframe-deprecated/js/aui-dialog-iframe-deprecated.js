@@ -15,6 +15,7 @@ var Lang = A.Lang,
     HOST = 'host',
     IFRAME_CSS_CLASS = 'iframeCssClass',
     IFRAME_ID = 'iframeId',
+    IFRAME_TITLE = 'iframeTitle',
     KEY = 'key',
     LOAD = 'load',
     OFFSET_HEIGHT = 'offsetHeight',
@@ -37,7 +38,7 @@ var Lang = A.Lang,
 
     BUFFER_CSS_CLASS = [CSS_IFRAME_NODE],
 
-    TPL_IFRAME = '<iframe class="{cssClass}" frameborder="0" id="{id}" name="{id}" src="{uri}"></iframe>',
+    TPL_IFRAME = '<iframe class="{cssClass}" frameborder="0" id="{id}" name="{id}" src="{uri}" title="{title}"></iframe>',
 
     UI = A.Widget.UI_SRC,
     UI_SRC = {
@@ -76,6 +77,11 @@ var DialogIframePlugin = A.Component.create({
 
                 return instance.get('id') || A.guid();
             }
+        },
+
+        iframeTitle: {
+            validator: Lang.isString,
+            value: ''
         },
 
         uri: {}
@@ -263,6 +269,7 @@ var DialogIframePlugin = A.Component.create({
             var iframeTpl = Lang.sub(
                 TPL_IFRAME, {
                     cssClass: instance.get(IFRAME_CSS_CLASS),
+                    title: instance.get(IFRAME_TITLE),
                     id: instance.get(IFRAME_ID),
                     uri: instance.get(URI)
                 }
@@ -333,22 +340,20 @@ var DialogIframePlugin = A.Component.create({
             var instance = this;
 
             if (instance.get(CLOSE_ON_ESCAPE)) {
-                if (!instance._eventCloseOnEscapeHandle) {
-                    try {
-                        var iframeWindow = instance.node.get(CONTENT_WINDOW);
+                try {
+                    var iframeWindow = instance.node.get(CONTENT_WINDOW);
 
-                        var iframeDoc = iframeWindow.get(DOCUMENT);
+                    var iframeDoc = iframeWindow.get(DOCUMENT);
 
-                        instance._eventCloseOnEscapeHandle = A.on(
-                            KEY,
-                            function() {
-                                instance._host.hide();
-                            }, [iframeDoc],
-                            'down:27'
-                        );
-                    }
-                    catch (exception) {}
+                    instance._eventCloseOnEscapeHandle = A.on(
+                        KEY,
+                        function() {
+                            instance._host.hide();
+                        }, [iframeDoc],
+                        'down:27'
+                    );
                 }
+                catch (exception) {}
             }
             else if (instance._eventCloseOnEscapeHandle) {
                 instance._eventCloseOnEscapeHandle.detach();

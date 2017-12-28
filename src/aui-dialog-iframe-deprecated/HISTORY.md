@@ -4,4 +4,5 @@
 
 ## @VERSION@
 
-No registries yet.
+* [AUI-3127](https://issues.liferay.com/browse/AUI-3127) IFrame dialog cannot be closed with the escape key if an action on the dialog causes it to reload
+* [AUI-3122](https://issues.liferay.com/browse/AUI-3122) iframe is created without title attribute
